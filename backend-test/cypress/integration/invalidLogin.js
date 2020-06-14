@@ -1,6 +1,6 @@
 ///<reference types="Cypress"/>
 
-import * as Login from "../helpers/Login/Login"
+import * as Login from "../helpers/Login/login"
 
 describe('login tests', function(){
 it('invalid login', function(){
