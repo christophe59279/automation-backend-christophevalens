@@ -45,6 +45,7 @@ function createRoom(cy){
     }).then((resp => {
         expect(resp.status).to.eq(200)
         cy.log(resp.body)
+        let lastRoomId= (resp.body.id)
         expect(resp.body.category).to.equal("single")
         expect(resp.body.floor).to.eq(1)
         expect(resp.body.number).to.eq(103)
@@ -55,8 +56,49 @@ function createRoom(cy){
     }))
 }
 
+function deleteroom(cy){
+    const deleteURL='http://localhost:3000/api/room/'
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:3000/api/room/new',
+        headers: {
+            'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+            "Content-Type": "application/json"
+        },
+        body:{
+            "features":["penthouse"],
+            "category":"single",
+            "available":false,
+            "number":"104",
+            "floor":"1",
+            "price":"3000",
+        }
+    }).then((resp => {
+        expect(resp.status).to.eq(200)
+        let lastRoomId= (resp.body.id)
+        cy.log(resp.body.id)
+        
+        cy.request({
+            method:'DELETE',
+            url:deleteURL+lastRoomId,
+            headers: {
+                'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+                "Content-Type": "application/json"
+            }
+        }).then((resp=>{
+            expect(resp.status).to.eq(200)
+        }))
+       
+    }))
+
+
+}
+
+
+
 module.exports=
 {
    viewAllRooms,
-   createRoom
+   createRoom,
+   deleteroom
 }

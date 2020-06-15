@@ -13,11 +13,19 @@ describe('room tests', function(){
         }))
     })
 
-    it('login an create a room', function(){
+    it('login and create a room', function(){
 
         Login.validLogin(cy)
         cy.then((resp=>{
             Room.createRoom(cy)
+        }))
+    })
+
+    it('login, create a room and delete it', function(){
+
+        Login.validLogin(cy)
+        cy.then((resp=>{
+            Room.deleteroom(cy)
         }))
     })
 
