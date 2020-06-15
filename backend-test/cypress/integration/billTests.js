@@ -21,8 +21,5 @@ describe('bill tests', function(){
             Bill.payBill(cy)
             }))
     })
-
-    
-
     
 })
