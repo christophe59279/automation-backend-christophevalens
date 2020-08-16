@@ -95,10 +95,59 @@ function deleteroom(cy){
 }
 
 
+function editroom(cy){
+    const editURL='http://localhost:3000/api/room/'
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:3000/api/room/new',
+        headers: {
+            'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+            "Content-Type": "application/json"
+        },
+        body:{
+            "features":["penthouse"],
+            "category":"single",
+            "available":false,
+            "number":"104",
+            "floor":"1",
+            "price":"3000",
+        }
+    }).then((resp => {
+        expect(resp.status).to.eq(200)
+        let lastRoomId= (resp.body.id)
+        cy.log(resp.body.id)
+        
+        cy.request({
+            method:'PUT',
+            url:editURL+lastRoomId,
+            headers: {
+                'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+                "Content-Type": "application/json"
+            },
+            body:{
+                "features":["penthouse"],
+                "category":"double",
+                "available":false,
+                "number":"104",
+                "floor":"1",
+                "price":"5000",
+            }
+        }).then((resp=>{
+            expect(resp.status).to.eq(200)
+        }))
+       
+    }))
+
+
+}
+
+
+
 
 module.exports=
 {
    viewAllRooms,
    createRoom,
-   deleteroom
+   deleteroom,
+   editroom
 }

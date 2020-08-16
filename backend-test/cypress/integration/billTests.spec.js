@@ -4,7 +4,7 @@ import * as Bill from "../helpers/Bill/bill"
 import * as Login from "../helpers/Login/login"
 import * as Logout from "../helpers/Login/logout"
 
-describe('bill tests', function(){
+describe.skip('bill tests', function(){
     it('Login and create a unpaid bill', function(){
 
     Login.validLogin(cy)
